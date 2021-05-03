@@ -1,8 +1,11 @@
 ---
 title: "Final Project"
 subtitle: "Data Science for Biologists, Spring 2021"
-author: "Your name goes here"
-output: html_document
+author: "Caitlyn Angley"
+output: 
+  html_document:
+    theme: cerulean
+    highlight: zenburn
 editor_options: 
   chunk_output_type: console
 ---
@@ -12,21 +15,30 @@ editor_options:
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = TRUE, include = TRUE)
 
 # Load all libraries you use HERE:
+library(tidyverse)
 ```
 
 <br><br>
 
 ## Introduction
+The data I chose is Women in the Workplace. I chose this data set because I have always been interested in the differences between men and women in the workplace, especially dealing with wages. This data set includes data about wages earned by men vs. women, what sectors they work in, as well as who is working part-time or full-time. 
+[Link to the Data!](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-03-05)
 
 ```{r read-examine-data}
+jobs_gender <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/jobs_gender.csv")
+earnings_female <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/earnings_female.csv") 
+employed_gender <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/employed_gender.csv") 
 
+glimpse(earnings_female)
+glimpse(employed_gender)
+glimpse(jobs_gender)
 ```
 
 <br><br>
 
 ## Question 1
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### How has female full-time employment changed over time?
 
 ### Methods
 
@@ -39,7 +51,7 @@ Replace this text with your answer to your question.
 
 ## Question 2
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### How has female earnings in Life, Physical, and Social Science jobs changed over time?
 
 ### Methods
 
@@ -51,7 +63,7 @@ Replace this text with your answer to your question.
 
 ## Question 3
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### Do males make more money than woman as service workers?.
 
 ### Methods
 
@@ -64,7 +76,7 @@ Replace this text with your answer to your question.
 
 ## Question 4
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### How has the amount of women biological scientists changed over the years?
 
 ### Methods
 
