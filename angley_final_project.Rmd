@@ -15,7 +15,7 @@ editor_options:
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = TRUE, include = TRUE)
 
 # Load all libraries you use HERE:
-library(tidyverse)
+library(tidyverse) #loading tidyverse
 ```
 
 <br><br>
@@ -29,7 +29,7 @@ jobs_gender <- readr::read_csv("https://raw.githubusercontent.com/rfordatascienc
 earnings_female <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/earnings_female.csv") 
 employed_gender <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/employed_gender.csv") 
 
-glimpse(earnings_female)
+glimpse(earnings_female) #looking at each dataset
 glimpse(employed_gender)
 glimpse(jobs_gender)
 ```
@@ -41,11 +41,22 @@ glimpse(jobs_gender)
 #### How has female full-time employment changed over time?
 
 ### Methods
+```{r question_1_methods}
+employed_gender%>% #use employed gender part of data set
+  ggplot()+ #use ggplot
+  aes(x=year,
+      y=full_time_female)+ #year on x, amount of females on y
+  geom_line(color= "hotpink")+ #make a line plot with a pink line
+  geom_point(color= "purple")+ #add purple points to the line
+  theme_bw()+ #change the theme
+  labs(x= "Year",
+       y= "Females Working Full Time",
+       title= "Amount of Females Working Full Time Over Time") #change the labels and add a title
+```
 
 ### Answer
 
-Replace this text with your answer to your question.
-
+The amount of females working full time has gone up and down over the years, but ended up in generally the same spot.
 
 <br><br>
 
@@ -54,16 +65,34 @@ Replace this text with your answer to your question.
 #### How has female earnings in Life, Physical, and Social Science jobs changed over time?
 
 ### Methods
+```{r question_2_methods}
+jobs_gender%>% #using the jobs_gender tibble
+  select(year, minor_category, workers_female)%>% #only want to look at these columns
+  filter(minor_category== "Life, Physical, and Social Science")%>% #only want to see women in life physical and social science
+  group_by(year)%>% #group by the year
+  summarize(workers_female=sum(workers_female))%>% #find the amount of women for each year
+  ggplot()+ #use ggplot
+  aes(x=year,
+      y= workers_female)+ #year on x, female workers on y
+  geom_point()+ #have points on the plot
+  geom_line(color= "purple")+ #make a line plot
+  theme_minimal()+ #change the theme
+  labs(x="Year",
+       y="Workers Female",
+       title= "Women Working in Life, Physical, and Social Science Over Time") #change labels and add a title
+
+```
+<br>
 
 ### Answer
 
-Replace this text with your answer to your question.
+The amount of women working in life, physical, and social science over time has increased since 2013. 
 
 <br><br>
 
 ## Question 3
 
-#### Do males make more money than woman as service workers?.
+#### Do males make more money than woman as service workers?
 
 ### Methods
 
