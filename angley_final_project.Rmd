@@ -18,7 +18,7 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = TRUE, include = TRUE)
 library(tidyverse) #loading tidyverse
 ```
 
-<br><br>
+<br>
 
 ## Introduction
 The data I chose is Women in the Workplace. I chose this data set because I have always been interested in the differences between men and women in the workplace, especially dealing with wages. This data set includes data about wages earned by men vs. women, what sectors they work in, as well as who is working part-time or full-time. 
@@ -50,7 +50,7 @@ employed_gender%>% #use employed gender part of data set
   geom_point(color= "purple")+ #add purple points to the line
   theme_bw()+ #change the theme
   labs(x= "Year",
-       y= "Females Working Full Time",
+       y= "Percent of Females Working Full Time",
        title= "Amount of Females Working Full Time Over Time") #change the labels and add a title
 ```
 
@@ -95,10 +95,36 @@ The amount of women working in life, physical, and social science over time has 
 #### Do males make more money than woman as service workers?
 
 ### Methods
+```{r question_3_methods}
+jobs_gender%>%
+  select(major_category, total_earnings_male, total_earnings_female)%>%
+  rename(Male=total_earnings_male)%>% #rename male earnings
+  rename(Female=total_earnings_female)%>% #rename female earnings
+  pivot_longer(cols=c("Male","Female"), #pivot to a longer tibble
+               names_to = "gender", #put the column names to new column named gender
+               values_to = "earnings")%>% #put the earnings into a new column called earnings
+  drop_na()%>% #drop the NAs
+  group_by(gender)%>% #group by male or female
+  summarise(mean_earnings=mean(earnings))%>% #find average earnings for each gender in service industry
+  ggplot()+ #use ggplot
+  aes(x=gender,
+      y=mean_earnings,
+      fill=gender)+ #gender on x, earnings on y, fill to gender
+  geom_col()+#make a bar plot
+  labs(x="Gender",
+       y="Mean Earnings($)",
+       title= "Male and Female Earnings in the Service Industy")+ #change labels and add title
+  scale_fill_brewer(palette="Accent")+ #change colors
+  theme_minimal()+ #change theme
+  theme(legend.position = "none") #get rid of the legend
+ 
+
+```
+<br><br>
 
 ### Answer
 
-Replace this text with your answer to your question.
+Males, on average, do make more money than females in the service industry,
 
 
 <br><br>
@@ -108,7 +134,31 @@ Replace this text with your answer to your question.
 #### How has the amount of women biological scientists changed over the years?
 
 ### Methods
+```{r question_4_methods}
+jobs_gender%>% #using jobs gender tibble
+  select(year, occupation, workers_female)%>% #only use the year, occupations, and workers female columns
+  filter(occupation=="Biological scientists")%>% #only show women who are biological scienctists
+  ggplot()+ #use ggplot
+  aes(x=year,
+      y=workers_female)+ #year on x, female workers on y
+  geom_line()+ #make line plot
+  geom_point(color="red")+ #add red points to the plot
+  theme_minimal()+ #change theme
+  labs(x= "Year",
+       y="Number of Female Workers",
+       title="Females as Biological Scientists Over The Years")+ #change labels add title
+  ylim(27000,30000) #change y limit so the graph isnt misleading
+
+```
+<br><br>
+
 
 ### Answer
 
-Replace this text with your answer to your question.
+Females as biological scientists took a small dip in 2014, but overall, the amount of females has increased slighlty from 2013 to 2016.
+
+
+
+
+
+
